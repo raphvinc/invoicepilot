@@ -1,174 +1,112 @@
+// src/app/dashboard/page.tsx
+"use client";
+
+import Link from 'next/link';
+
 export default function DashboardPage() {
     return (
-      <div>
-        <div className="mb-6">
-          <h1 className="text-2xl font-bold text-gray-900">Tableau de bord</h1>
-          <p className="text-gray-600 mt-1">
+      <div className="max-w-6xl mx-auto">
+        <div className="mb-10 pt-4">
+          <h1 className="text-3xl font-medium text-gray-900">Tableau de bord</h1>
+          <p className="text-gray-500 mt-2">
             Bienvenue sur votre tableau de bord InvoicePilot
           </p>
         </div>
   
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* Carte statistique - Factures à payer */}
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="flex items-center">
-              <div className="p-3 rounded-full bg-indigo-50 text-indigo-600">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                </svg>
-              </div>
-              <div className="ml-4">
-                <h2 className="font-semibold text-gray-500 text-sm">Factures à payer</h2>
-                <p className="text-2xl font-bold text-gray-900">8</p>
-              </div>
+          <div className="bg-white rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.03)] p-8">
+            <div className="flex flex-col">
+              <span className="text-4xl font-medium text-gray-900">8</span>
+              <span className="text-sm text-gray-500 mt-1">Factures à payer</span>
             </div>
           </div>
   
           {/* Carte statistique - En retard */}
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="flex items-center">
-              <div className="p-3 rounded-full bg-red-50 text-red-600">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <div className="ml-4">
-                <h2 className="font-semibold text-gray-500 text-sm">En retard</h2>
-                <p className="text-2xl font-bold text-gray-900">3</p>
-              </div>
+          <div className="bg-white rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.03)] p-8">
+            <div className="flex flex-col">
+              <span className="text-4xl font-medium text-gray-900">3</span>
+              <span className="text-sm text-gray-500 mt-1">En retard</span>
             </div>
           </div>
   
           {/* Carte statistique - Relances envoyées */}
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="flex items-center">
-              <div className="p-3 rounded-full bg-yellow-50 text-yellow-600">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
-                </svg>
-              </div>
-              <div className="ml-4">
-                <h2 className="font-semibold text-gray-500 text-sm">Relances envoyées</h2>
-                <p className="text-2xl font-bold text-gray-900">12</p>
-              </div>
+          <div className="bg-white rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.03)] p-8">
+            <div className="flex flex-col">
+              <span className="text-4xl font-medium text-gray-900">12</span>
+              <span className="text-sm text-gray-500 mt-1">Relances envoyées</span>
             </div>
           </div>
   
           {/* Carte statistique - Montant dû */}
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="flex items-center">
-              <div className="p-3 rounded-full bg-green-50 text-green-600">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <div className="ml-4">
-                <h2 className="font-semibold text-gray-500 text-sm">Montant dû</h2>
-                <p className="text-2xl font-bold text-gray-900">12 540 €</p>
-              </div>
+          <div className="bg-white rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.03)] p-8">
+            <div className="flex flex-col">
+              <span className="text-4xl font-medium text-gray-900">12 540 €</span>
+              <span className="text-sm text-gray-500 mt-1">Montant dû</span>
             </div>
           </div>
         </div>
   
         {/* Section des factures récentes */}
-        <div className="bg-white rounded-lg shadow">
-          <div className="p-6 border-b border-gray-200">
-            <h2 className="text-lg font-semibold text-gray-900">Factures récentes</h2>
+        <div className="bg-white rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.03)] overflow-hidden">
+          <div className="p-8 border-b border-gray-100">
+            <h2 className="text-xl font-medium text-gray-900">Factures récentes</h2>
           </div>
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Facture
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Client
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Date d'échéance
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Montant
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Statut
-                  </th>
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-gray-100">
+                  <th className="px-8 py-4 text-left text-xs font-medium text-gray-500 uppercase">Facture</th>
+                  <th className="px-8 py-4 text-left text-xs font-medium text-gray-500 uppercase">Client</th>
+                  <th className="px-8 py-4 text-left text-xs font-medium text-gray-500 uppercase">Date d'échéance</th>
+                  <th className="px-8 py-4 text-left text-xs font-medium text-gray-500 uppercase">Montant</th>
+                  <th className="px-8 py-4 text-left text-xs font-medium text-gray-500 uppercase">Statut</th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                <tr>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium text-gray-900">FAC-2023-001</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">AgenceWeb Express</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">15/03/2023</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">3 500 €</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+              <tbody>
+                <tr className="border-b border-gray-100 hover:bg-gray-50 transition-colors duration-150">
+                  <td className="px-8 py-4 whitespace-nowrap text-sm text-gray-900">FAC-2023-001</td>
+                  <td className="px-8 py-4 whitespace-nowrap text-sm text-gray-900">AgenceWeb Express</td>
+                  <td className="px-8 py-4 whitespace-nowrap text-sm text-gray-900">15/03/2023</td>
+                  <td className="px-8 py-4 whitespace-nowrap text-sm text-gray-900">3 500 €</td>
+                  <td className="px-8 py-4 whitespace-nowrap">
+                    <span className="inline-block rounded-full bg-red-50 px-3 py-1 text-xs font-medium text-red-700">
                       En retard
                     </span>
                   </td>
                 </tr>
-                <tr>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium text-gray-900">FAC-2023-002</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">DigitalMarketing Pro</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">22/03/2023</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">2 800 €</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+
+                <tr className="border-b border-gray-100 hover:bg-gray-50 transition-colors duration-150">
+                  <td className="px-8 py-4 whitespace-nowrap text-sm text-gray-900">FAC-2023-002</td>
+                  <td className="px-8 py-4 whitespace-nowrap text-sm text-gray-900">DigitalMarketing Pro</td>
+                  <td className="px-8 py-4 whitespace-nowrap text-sm text-gray-900">22/03/2023</td>
+                  <td className="px-8 py-4 whitespace-nowrap text-sm text-gray-900">2 800 €</td>
+                  <td className="px-8 py-4 whitespace-nowrap">
+                    <span className="inline-block rounded-full bg-yellow-50 px-3 py-1 text-xs font-medium text-yellow-700">
                       En attente
                     </span>
                   </td>
                 </tr>
-                <tr>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium text-gray-900">FAC-2023-003</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">Studio Graphique Créatif</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">28/03/2023</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">4 200 €</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+
+                <tr className="border-b border-gray-100 hover:bg-gray-50 transition-colors duration-150">
+                  <td className="px-8 py-4 whitespace-nowrap text-sm text-gray-900">FAC-2023-003</td>
+                  <td className="px-8 py-4 whitespace-nowrap text-sm text-gray-900">Studio Graphique Créatif</td>
+                  <td className="px-8 py-4 whitespace-nowrap text-sm text-gray-900">28/03/2023</td>
+                  <td className="px-8 py-4 whitespace-nowrap text-sm text-gray-900">4 200 €</td>
+                  <td className="px-8 py-4 whitespace-nowrap">
+                    <span className="inline-block rounded-full bg-yellow-50 px-3 py-1 text-xs font-medium text-yellow-700">
                       En attente
                     </span>
                   </td>
                 </tr>
-                <tr>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium text-gray-900">FAC-2023-004</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">Consulting Digital</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">05/03/2023</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">2 040 €</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+
+                <tr className="hover:bg-gray-50 transition-colors duration-150">
+                  <td className="px-8 py-4 whitespace-nowrap text-sm text-gray-900">FAC-2023-004</td>
+                  <td className="px-8 py-4 whitespace-nowrap text-sm text-gray-900">Consulting Digital</td>
+                  <td className="px-8 py-4 whitespace-nowrap text-sm text-gray-900">05/03/2023</td>
+                  <td className="px-8 py-4 whitespace-nowrap text-sm text-gray-900">2 040 €</td>
+                  <td className="px-8 py-4 whitespace-nowrap">
+                    <span className="inline-block rounded-full bg-green-50 px-3 py-1 text-xs font-medium text-green-700">
                       Payée
                     </span>
                   </td>
@@ -176,12 +114,12 @@ export default function DashboardPage() {
               </tbody>
             </table>
           </div>
-          <div className="px-6 py-4 border-t border-gray-200">
-            <a href="/invoices" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+          <div className="px-8 py-6 border-t border-gray-100">
+            <Link href="/invoices" className="text-sm font-medium text-blue-500 hover:text-blue-600 transition-colors">
               Voir toutes les factures →
-            </a>
+            </Link>
           </div>
         </div>
       </div>
     );
-  }
+}
