@@ -70,7 +70,6 @@ export default function Sidebar() {
         </Link>
       </div>
       <nav className="px-4 py-6">
-      // src/components/dashboard/Sidebar.tsx (suite)
         <ul className="space-y-2">
           {menuItems.map((item) => {
             const isActive = pathname === item.href || pathname?.startsWith(`${item.href}/`);
