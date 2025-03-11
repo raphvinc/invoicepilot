@@ -1,3 +1,4 @@
+// src/components/layout/Header.tsx
 "use client";
 
 import Link from 'next/link';
@@ -7,23 +8,23 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <header className="bg-white shadow-sm">
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <header className="bg-white">
+      <nav className="max-w-7xl mx-auto px-6 lg:px-8 py-6">
         <div className="flex justify-between items-center">
           <div className="flex items-center">
-            <Link href="/" className="text-xl font-bold text-indigo-600">
+            <Link href="/" className="text-2xl font-medium text-blue-500">
               InvoicePilot.io
             </Link>
           </div>
           
           {/* Desktop navigation */}
-          <div className="hidden md:flex items-center space-x-4">
-            <Link href="/login" className="text-gray-600 hover:text-gray-900">
+          <div className="hidden md:flex items-center space-x-6">
+            <Link href="/login" className="text-gray-500 hover:text-gray-900 text-sm font-medium">
               Se connecter
             </Link>
             <Link
               href="/register"
-              className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors"
+              className="bg-blue-500 text-white px-5 py-2.5 rounded-full hover:bg-blue-600 transition-colors text-sm font-medium"
             >
               S'inscrire
             </Link>
@@ -33,7 +34,7 @@ export default function Header() {
           <div className="md:hidden">
             <button
               type="button"
-              className="text-gray-500 hover:text-gray-700 focus:outline-none"
+              className="text-gray-400 hover:text-gray-500 focus:outline-none"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
               <svg 
@@ -46,14 +47,14 @@ export default function Header() {
                   <path 
                     strokeLinecap="round" 
                     strokeLinejoin="round" 
-                    strokeWidth={2} 
+                    strokeWidth={1.5} 
                     d="M6 18L18 6M6 6l12 12" 
                   />
                 ) : (
                   <path 
                     strokeLinecap="round" 
                     strokeLinejoin="round" 
-                    strokeWidth={2} 
+                    strokeWidth={1.5} 
                     d="M4 6h16M4 12h16M4 18h16" 
                   />
                 )}
@@ -64,17 +65,17 @@ export default function Header() {
         
         {/* Mobile menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden mt-4 space-y-2">
+          <div className="md:hidden mt-4 space-y-3 py-3">
             <Link 
               href="/login" 
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
+              className="block px-4 py-2 rounded-lg text-base font-medium text-gray-500 hover:bg-gray-50"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Se connecter
             </Link>
             <Link 
               href="/register" 
-              className="block px-3 py-2 rounded-md text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+              className="block px-4 py-2 rounded-lg text-base font-medium text-white bg-blue-500 hover:bg-blue-600"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               S'inscrire
