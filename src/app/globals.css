@@ -3,19 +3,24 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-}
-
-@theme inline {
+  
+  /* Déplacer les variables du bloc @theme inline ici */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
+/* Supprimer le bloc @theme qui cause l'erreur */
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    
+    /* Ces lignes garantissent que les variables de thème suivent le mode sombre */
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
   }
 }
 
