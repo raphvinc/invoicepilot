@@ -1,9 +1,83 @@
 // src/app/(app)/clients/page.tsx
 "use client";
 
+import { useState } from 'react';
 import Link from 'next/link';
+import ClientScoreCard from '@/components/clients/ClientScoreCard';
+
+interface Client {
+  id: number;
+  name: string;
+  email: string;
+  phone: string;
+  invoices: number;
+  total: string;
+  score: number;
+  scoreCategory: 'excellent' | 'good' | 'average' | 'poor';
+  averagePayDays: number;
+}
 
 export default function ClientsPage() {
+  const [selectedClient, setSelectedClient] = useState<Client | null>(null);
+  
+  const clients: Client[] = [
+    {
+      id: 1,
+      name: 'AgenceWeb Express',
+      email: 'contact@agencewebexpress.com',
+      phone: '01 23 45 67 89',
+      invoices: 8,
+      total: '12 500 €',
+      score: 95,
+      scoreCategory: 'excellent',
+      averagePayDays: -2
+    },
+    {
+      id: 2,
+      name: 'DigitalMarketing Pro',
+      email: 'info@digitalmarketing.fr',
+      phone: '01 34 56 78 90',
+      invoices: 5,
+      total: '8 350 €',
+      score: 87,
+      scoreCategory: 'good',
+      averagePayDays: 1
+    },
+    {
+      id: 3,
+      name: 'Studio Graphique Créatif',
+      email: 'hello@studiographique.fr',
+      phone: '01 45 67 89 01',
+      invoices: 12,
+      total: '15 200 €',
+      score: 72,
+      scoreCategory: 'average',
+      averagePayDays: 5
+    },
+    {
+      id: 4,
+      name: 'Consulting Digital',
+      email: 'contact@consultingdigital.com',
+      phone: '01 56 78 90 12',
+      invoices: 3,
+      total: '4 800 €',
+      score: 45,
+      scoreCategory: 'poor',
+      averagePayDays: 12
+    },
+    {
+      id: 5,
+      name: 'Web Solutions',
+      email: 'support@websolutions.fr',
+      phone: '01 67 89 01 23',
+      invoices: 7,
+      total: '9 750 €',
+      score: 83,
+      scoreCategory: 'good',
+      averagePayDays: 2
+    }
+  ];
+
   return (
     <div className="max-w-6xl mx-auto">
       <div className="mb-10 pt-4 flex justify-between items-center">
@@ -20,6 +94,19 @@ export default function ClientsPage() {
           Nouveau client
         </button>
       </div>
+
+      {/* Client Score Card (apparaît quand un client est sélectionné) */}
+      {selectedClient && (
+        <div className="mb-8">
+          <ClientScoreCard 
+            clientName={selectedClient.name}
+            score={selectedClient.score}
+            invoiceCount={selectedClient.invoices}
+            totalAmount={selectedClient.total}
+            averagePayDays={selectedClient.averagePayDays}
+          />
+        </div>
+      )}
 
       {/* Filtres de recherche */}
       <div className="bg-white rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.03)] mb-8 p-8">
@@ -65,7 +152,7 @@ export default function ClientsPage() {
               id="search"
               name="search"
               placeholder="Rechercher un client..."
-              className="block w-full rounded-lg border-gray-200 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition-colors duration-200  p-2"
+              className="block w-full rounded-lg border-gray-200 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition-colors duration-200 p-2"
             />
           </div>
         </div>
@@ -87,49 +174,20 @@ export default function ClientsPage() {
               </tr>
             </thead>
             <tbody>
-              {[
-                {
-                  name: 'AgenceWeb Express',
-                  email: 'contact@agencewebexpress.com',
-                  phone: '01 23 45 67 89',
-                  invoices: 8,
-                  total: '12 500 €',
-                  score: 'excellent'
-                },
-                {
-                  name: 'DigitalMarketing Pro',
-                  email: 'info@digitalmarketing.fr',
-                  phone: '01 34 56 78 90',
-                  invoices: 5,
-                  total: '8 350 €',
-                  score: 'good'
-                },
-                {
-                  name: 'Studio Graphique Créatif',
-                  email: 'hello@studiographique.fr',
-                  phone: '01 45 67 89 01',
-                  invoices: 12,
-                  total: '15 200 €',
-                  score: 'average'
-                },
-                {
-                  name: 'Consulting Digital',
-                  email: 'contact@consultingdigital.com',
-                  phone: '01 56 78 90 12',
-                  invoices: 3,
-                  total: '4 800 €',
-                  score: 'poor'
-                },
-                {
-                  name: 'Web Solutions',
-                  email: 'support@websolutions.fr',
-                  phone: '01 67 89 01 23',
-                  invoices: 7,
-                  total: '9 750 €',
-                  score: 'good'
-                }
-              ].map((client, index) => (
-                <tr key={index} className="border-b border-gray-100 hover:bg-gray-50 transition-colors duration-150 ease-in-out">
+              {clients.map((client) => (
+                <tr 
+                  key={client.id} 
+                  className={`border-b border-gray-100 hover:bg-gray-50 transition-colors duration-150 ease-in-out ${
+                    selectedClient?.id === client.id ? 'bg-blue-50' : ''
+                  }`}
+                  onClick={() => {
+                    if (selectedClient?.id === client.id) {
+                      setSelectedClient(null);
+                    } else {
+                      setSelectedClient(client);
+                    }
+                  }}
+                >
                   <td className="px-8 py-4 whitespace-nowrap">
                     <div className="flex items-center">
                       <div className="flex-shrink-0 h-10 w-10 bg-blue-50 rounded-full flex items-center justify-center">
@@ -158,17 +216,17 @@ export default function ClientsPage() {
                     <span 
                       className={`px-3 py-1 inline-block text-xs font-medium rounded-full 
                         ${
-                          client.score === 'excellent' ? 'bg-green-50 text-green-700' : 
-                          client.score === 'good' ? 'bg-blue-50 text-blue-700' : 
-                          client.score === 'average' ? 'bg-yellow-50 text-yellow-700' : 
+                          client.scoreCategory === 'excellent' ? 'bg-green-50 text-green-700' : 
+                          client.scoreCategory === 'good' ? 'bg-blue-50 text-blue-700' : 
+                          client.scoreCategory === 'average' ? 'bg-yellow-50 text-yellow-700' : 
                           'bg-red-50 text-red-700'
                         }`
                       }
                     >
                       {
-                        client.score === 'excellent' ? 'Excellent' : 
-                        client.score === 'good' ? 'Bon' : 
-                        client.score === 'average' ? 'Moyen' : 
+                        client.scoreCategory === 'excellent' ? 'Excellent' : 
+                        client.scoreCategory === 'good' ? 'Bon' : 
+                        client.scoreCategory === 'average' ? 'Moyen' : 
                         'Faible'
                       }
                     </span>
@@ -201,7 +259,7 @@ export default function ClientsPage() {
         <div className="px-8 py-6 border-t border-gray-100 flex items-center justify-between">
           <div>
             <p className="text-sm text-gray-500">
-              Affichage de <span className="font-medium">1</span> à <span className="font-medium">5</span> sur <span className="font-medium">12</span> clients
+              Affichage de <span className="font-medium">1</span> à <span className="font-medium">5</span> sur <span className="font-medium">5</span> clients
             </p>
           </div>
           <div className="flex space-x-3">

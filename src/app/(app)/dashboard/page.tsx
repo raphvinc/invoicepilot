@@ -2,6 +2,9 @@
 "use client";
 
 import Link from 'next/link';
+import InvoiceStatusChart from '@/components/dashboard/InvoiceStatusChart';
+import PaymentTimelineChart from '@/components/dashboard/PaymentTimelineChart';
+import ClientPaymentScoreChart from '@/components/dashboard/ClientPaymentScoreChart';
 
 export default function DashboardPage() {
     return (
@@ -45,6 +48,16 @@ export default function DashboardPage() {
               <span className="text-sm text-gray-500 mt-1">Montant dû</span>
             </div>
           </div>
+        </div>
+        
+        {/* Graphiques */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+          <InvoiceStatusChart />
+          <PaymentTimelineChart />
+        </div>
+        
+        <div className="mb-12">
+          <ClientPaymentScoreChart />
         </div>
   
         {/* Section des factures récentes */}
