@@ -1,4 +1,4 @@
-// src/app/clients/page.tsx
+// src/app/(app)/clients/page.tsx
 "use client";
 
 import Link from 'next/link';
@@ -31,7 +31,7 @@ export default function ClientsPage() {
             <select
               id="score"
               name="score"
-              className="block w-full rounded-lg border-gray-200 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition-colors duration-200"
+              className="block w-full rounded-lg border-gray-200 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition-colors duration-200 p-2 "
             >
               <option value="">Tous les scores</option>
               <option value="excellent">Excellent</option>
@@ -47,7 +47,7 @@ export default function ClientsPage() {
             <select
               id="lastInvoice"
               name="lastInvoice"
-              className="block w-full rounded-lg border-gray-200 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition-colors duration-200"
+              className="block w-full rounded-lg border-gray-200 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition-colors duration-200 p-2"
             >
               <option value="">Toutes les périodes</option>
               <option value="30">30 derniers jours</option>
@@ -65,7 +65,7 @@ export default function ClientsPage() {
               id="search"
               name="search"
               placeholder="Rechercher un client..."
-              className="block w-full rounded-lg border-gray-200 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition-colors duration-200"
+              className="block w-full rounded-lg border-gray-200 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition-colors duration-200  p-2"
             />
           </div>
         </div>

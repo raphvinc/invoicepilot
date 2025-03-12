@@ -1,4 +1,4 @@
-// src/app/invoices/page.tsx
+// src/app/(app)/invoices/page.tsx
 "use client";
 
 import Link from 'next/link';
@@ -31,7 +31,7 @@ export default function InvoicesPage() {
             <select
               id="status"
               name="status"
-              className="block w-full rounded-lg border-gray-200 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition-colors duration-200"
+              className="block w-full rounded-lg border-gray-200 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition-colors duration-200 p-2"
             >
               <option value="">Tous les statuts</option>
               <option value="paid">Payée</option>
@@ -46,7 +46,7 @@ export default function InvoicesPage() {
             <select
               id="client"
               name="client"
-              className="block w-full rounded-lg border-gray-200 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition-colors duration-200"
+              className="block w-full rounded-lg border-gray-200 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition-colors duration-200 p-2"
             >
               <option value="">Tous les clients</option>
               <option value="1">AgenceWeb Express</option>
@@ -62,7 +62,7 @@ export default function InvoicesPage() {
               type="date"
               id="date"
               name="date"
-              className="block w-full rounded-lg border-gray-200 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition-colors duration-200"
+              className="block w-full rounded-lg border-gray-200 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition-colors duration-200 p-2"
             />
           </div>
           <div>
@@ -74,7 +74,7 @@ export default function InvoicesPage() {
               id="search"
               name="search"
               placeholder="Rechercher..."
-              className="block w-full rounded-lg border-gray-200 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition-colors duration-200"
+              className="block w-full rounded-lg border-gray-200 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition-colors duration-200 p-2"
             />
           </div>
         </div>

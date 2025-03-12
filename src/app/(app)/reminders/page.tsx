@@ -1,4 +1,4 @@
-// src/app/reminders/page.tsx
+// src/app/(app)/reminders/page.tsx
 "use client";
 
 import Link from 'next/link';
