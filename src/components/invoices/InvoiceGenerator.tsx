@@ -174,8 +174,24 @@ const InvoiceGenerator: React.FC<InvoiceGeneratorProps> = ({ onClose, onGenerate
 
   // Soumission du formulaire
   const handleSubmit = () => {
-    generateInvoicePDF(invoice, defaultCompanyInfo);
-    onGenerate(invoice);
+    console.log("Démarrage de la génération de facture");
+    console.log("Données de la facture:", invoice);
+    
+    try {
+      // Génération et téléchargement du PDF
+      console.log("Tentative de génération du PDF");
+      generateInvoicePDF(invoice, defaultCompanyInfo);
+      console.log("PDF généré avec succès");
+      
+      // Envoi des données au composant parent
+      console.log("Envoi des données au composant parent");
+      onGenerate(invoice);
+    } catch (error) {
+      console.error("Erreur lors de la génération du PDF:", error);
+      alert("Une erreur s'est produite lors de la génération du PDF. Vérifiez la console pour plus de détails.");
+      // Quand même envoyer les données au composant parent en cas d'erreur
+      onGenerate(invoice);
+    }
   };
 
   // Formatage des montants
