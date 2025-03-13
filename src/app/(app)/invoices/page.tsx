@@ -1,9 +1,31 @@
-// src/app/(app)/invoices/page.tsx
 "use client";
 
+import { useState } from 'react';
 import Link from 'next/link';
+import InvoiceImportForm from '@/components/invoices/InvoiceImportForm';
+import InvoiceGenerator from '@/components/invoices/InvoiceGenerator';
+
+// Définir une interface pour les données importées
+interface ImportedData {
+  fileName?: string;
+  invoiceNumber?: string;
+  amount?: string;
+  date?: string;
+  client?: string;
+  type?: string;
+  error?: string;
+  [key: string]: any; // Pour permettre d'autres propriétés si nécessaire
+}
 
 export default function InvoicesPage() {
+  const [showImportForm, setShowImportForm] = useState(false);
+  const [showGenerator, setShowGenerator] = useState(false);
+  
+  const handleImport = (data: ImportedData[]) => {
+    console.log('Données importées:', data);
+    // Logique pour traiter les données importées
+  };
+
   return (
     <div className="max-w-6xl mx-auto">
       <div className="mb-10 pt-4 flex justify-between items-center">
@@ -13,12 +35,26 @@ export default function InvoicesPage() {
             Gérez et suivez toutes vos factures
           </p>
         </div>
-        <button className="bg-blue-500 text-white px-5 py-2.5 rounded-full hover:bg-blue-600 transition-colors shadow-[0_2px_10px_rgba(0,0,0,0.03)] flex items-center">
-          <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-          </svg>
-          Nouvelle facture
-        </button>
+        <div className="flex space-x-3">
+          <button 
+            onClick={() => setShowImportForm(true)}
+            className="bg-blue-500 text-white px-5 py-2.5 rounded-full hover:bg-blue-600 transition-colors shadow-[0_2px_10px_rgba(0,0,0,0.03)] flex items-center"
+          >
+            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+            </svg>
+            Importer des factures
+          </button>
+          <button 
+            onClick={() => setShowGenerator(true)}
+            className="bg-blue-500 text-white px-5 py-2.5 rounded-full hover:bg-blue-600 transition-colors shadow-[0_2px_10px_rgba(0,0,0,0.03)] flex items-center"
+          >
+            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+            Nouvelle facture
+          </button>
+        </div>
       </div>
 
       {/* Filtres de recherche */}
@@ -165,6 +201,26 @@ export default function InvoicesPage() {
           </div>
         </div>
       </div>
+
+      {/* Modal d'importation */}
+      {showImportForm && (
+        <InvoiceImportForm 
+          onClose={() => setShowImportForm(false)} 
+          onImport={handleImport}
+        />
+      )}
+
+      {/* Modal de génération de facture */}
+      {showGenerator && (
+        <InvoiceGenerator
+          onClose={() => setShowGenerator(false)}
+          onGenerate={(data) => {
+            console.log('Facture générée:', data);
+            // Logique pour enregistrer la facture
+            setShowGenerator(false);
+          }}
+        />
+      )}
     </div>
   );
 }

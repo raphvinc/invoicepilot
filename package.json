@@ -10,10 +10,16 @@
   },
   "dependencies": {
     "@types/recharts": "^1.8.29",
+    "jspdf": "^3.0.0",
+    "jspdf-autotable": "^5.0.2",
     "next": "15.2.2",
+    "papaparse": "^5.5.2",
+    "pdfjs-dist": "^4.10.38",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "recharts": "^2.15.1"
+    "react-dropzone": "^14.3.8",
+    "recharts": "^2.15.1",
+    "tesseract.js": "^6.0.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
