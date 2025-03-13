@@ -1,6 +1,13 @@
 "use client";
 
 import React, { useState } from 'react';
+import { generateInvoicePDF } from '../../utils/InvoicePdfGenerator';
+import { defaultCompanyInfo } from '../../utils/CompanyInfo';
+
+interface InvoiceGeneratorProps {
+  onClose: () => void;
+  onGenerate: (data: any) => void;
+}
 
 interface InvoiceGeneratorProps {
   onClose: () => void;
@@ -167,6 +174,7 @@ const InvoiceGenerator: React.FC<InvoiceGeneratorProps> = ({ onClose, onGenerate
 
   // Soumission du formulaire
   const handleSubmit = () => {
+    generateInvoicePDF(invoice, defaultCompanyInfo);
     onGenerate(invoice);
   };
 
