@@ -1,13 +1,8 @@
 "use client";
 
-import React, { useState } from 'react';
-import { generateInvoicePDF } from '../../utils/InvoicePdfGenerator';
-import { defaultCompanyInfo } from '../../utils/CompanyInfo';
-
-interface InvoiceGeneratorProps {
-  onClose: () => void;
-  onGenerate: (data: any) => void;
-}
+import React, { useState } from "react";
+import { generateInvoicePDF } from "../../utils/InvoicePdfGenerator";
+import { defaultCompanyInfo } from "../../utils/CompanyInfo";
 
 interface InvoiceGeneratorProps {
   onClose: () => void;
@@ -17,13 +12,13 @@ interface InvoiceGeneratorProps {
 function generateInvoiceNumber() {
   const today = new Date();
   const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, '0');
-  const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const random = Math.floor(Math.random() * 1000).toString().padStart(3, "0");
   return `FACT-${year}${month}-${random}`;
 }
 
 function formatDate(date: Date) {
-  return date.toISOString().split('T')[0];
+  return date.toISOString().split("T")[0];
 }
 
 const InvoiceGenerator: React.FC<InvoiceGeneratorProps> = ({ onClose, onGenerate }) => {
@@ -32,171 +27,162 @@ const InvoiceGenerator: React.FC<InvoiceGeneratorProps> = ({ onClose, onGenerate
   dueDate.setDate(today.getDate() + 30);
 
   const [currentStep, setCurrentStep] = useState(1);
+  const [showConfirmModal, setShowConfirmModal] = useState(false); // État pour la modale
   const [invoice, setInvoice] = useState({
     number: generateInvoiceNumber(),
     date: formatDate(today),
     dueDate: formatDate(dueDate),
     client: {
-      id: '',
-      name: '',
-      email: '',
-      address: '',
-      zipCode: '',
-      city: '',
-      country: 'France',
-      vatNumber: ''
+      id: "",
+      name: "",
+      email: "",
+      address: "",
+      zipCode: "",
+      city: "",
+      country: "France",
+      vatNumber: "",
     },
-    items: [
-      { description: '', quantity: 1, unitPrice: 0, vatRate: 20, total: 0 }
-    ],
-    notes: '',
-    paymentTerms: '30 jours',
-    paymentMethod: 'Virement bancaire',
+    items: [{ description: "", quantity: 1, unitPrice: 0, vatRate: 20, total: 0 }],
+    notes: "",
+    paymentTerms: "30 jours",
+    paymentMethod: "Virement bancaire",
     totalHT: 0,
     totalTVA: 0,
-    totalTTC: 0
+    totalTTC: 0,
   });
 
-  // Liste fictive de clients pour le démonstrateur
   const clients = [
-    { id: '1', name: 'AgenceWeb Express', email: 'contact@agencewebexpress.com', address: '123 Rue du Web', zipCode: '75001', city: 'Paris', country: 'France', vatNumber: 'FR12345678901' },
-    { id: '2', name: 'DigitalMarketing Pro', email: 'info@digitalmarketing.fr', address: '45 Avenue Digitale', zipCode: '69002', city: 'Lyon', country: 'France', vatNumber: 'FR23456789012' },
-    { id: '3', name: 'Studio Graphique Créatif', email: 'hello@studiographique.fr', address: '8 Boulevard des Arts', zipCode: '33000', city: 'Bordeaux', country: 'France', vatNumber: 'FR34567890123' },
-    { id: '4', name: 'Consulting Digital', email: 'contact@consultingdigital.com', address: '56 Rue de la Consultation', zipCode: '44000', city: 'Nantes', country: 'France', vatNumber: 'FR45678901234' },
-    { id: '5', name: 'Web Solutions', email: 'support@websolutions.fr', address: '12 Place de l\'Innovation', zipCode: '67000', city: 'Strasbourg', country: 'France', vatNumber: 'FR56789012345' }
+    { id: "1", name: "AgenceWeb Express", email: "contact@agencewebexpress.com", address: "123 Rue du Web", zipCode: "75001", city: "Paris", country: "France", vatNumber: "FR12345678901" },
+    { id: "2", name: "DigitalMarketing Pro", email: "info@digitalmarketing.fr", address: "45 Avenue Digitale", zipCode: "69002", city: "Lyon", country: "France", vatNumber: "FR23456789012" },
+    { id: "3", name: "Studio Graphique Créatif", email: "hello@studiographique.fr", address: "8 Boulevard des Arts", zipCode: "33000", city: "Bordeaux", country: "France", vatNumber: "FR34567890123" },
+    { id: "4", name: "Consulting Digital", email: "contact@consultingdigital.com", address: "56 Rue de la Consultation", zipCode: "44000", city: "Nantes", country: "France", vatNumber: "FR45678901234" },
+    { id: "5", name: "Web Solutions", email: "support@websolutions.fr", address: "12 Place de l'Innovation", zipCode: "67000", city: "Strasbourg", country: "France", vatNumber: "FR56789012345" },
   ];
 
-  // Mise à jour d'un champ client
   const handleClientChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    
-    if (name === 'id' && value) {
-      const selectedClient = clients.find(client => client.id === value);
+    if (name === "id" && value) {
+      const selectedClient = clients.find((client) => client.id === value);
       if (selectedClient) {
-        setInvoice(prev => ({
+        setInvoice((prev) => ({
           ...prev,
-          client: { ...selectedClient }
+          client: { ...selectedClient },
         }));
       }
     } else {
-      setInvoice(prev => ({
+      setInvoice((prev) => ({
         ...prev,
         client: {
           ...prev.client,
-          [name]: value
-        }
+          [name]: value,
+        },
       }));
     }
   };
 
-  // Mise à jour d'un champ facture
   const handleInvoiceChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setInvoice(prev => ({
+    setInvoice((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
-  // Ajouter un article
   const addItem = () => {
-    setInvoice(prev => ({
+    setInvoice((prev) => ({
       ...prev,
-      items: [...prev.items, { description: '', quantity: 1, unitPrice: 0, vatRate: 20, total: 0 }]
+      items: [...prev.items, { description: "", quantity: 1, unitPrice: 0, vatRate: 20, total: 0 }],
     }));
   };
 
-  // Supprimer un article
   const removeItem = (index: number) => {
     const newItems = [...invoice.items];
     newItems.splice(index, 1);
-    
-    // Recalcul des totaux
     const calculatedTotals = calculateTotals(newItems);
-    
-    setInvoice(prev => ({
+    setInvoice((prev) => ({
       ...prev,
       items: newItems,
-      ...calculatedTotals
+      ...calculatedTotals,
     }));
   };
 
-  // Mise à jour d'un article
   const updateItem = (index: number, field: string, value: string | number) => {
     const newItems = [...invoice.items];
-    
-    // Convertit les valeurs numériques si nécessaire
-    if (field === 'quantity' || field === 'unitPrice' || field === 'vatRate') {
+    if (field === "quantity" || field === "unitPrice" || field === "vatRate") {
       value = parseFloat(value.toString()) || 0;
     }
-    
-    newItems[index] = { 
+    newItems[index] = {
       ...newItems[index],
-      [field]: value
+      [field]: value,
     };
-    
-    // Mise à jour du total de la ligne
-    if (field === 'quantity' || field === 'unitPrice') {
+    if (field === "quantity" || field === "unitPrice") {
       newItems[index].total = newItems[index].quantity * newItems[index].unitPrice;
     }
-    
-    // Recalcul des totaux
     const calculatedTotals = calculateTotals(newItems);
-    
-    setInvoice(prev => ({
+    setInvoice((prev) => ({
       ...prev,
       items: newItems,
-      ...calculatedTotals
+      ...calculatedTotals,
     }));
   };
 
-  // Calcul des totaux de la facture
   const calculateTotals = (items: any[]) => {
-    const totalHT = items.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
+    const totalHT = items.reduce((sum, item) => sum + item.quantity * item.unitPrice, 0);
     const totalTVA = items.reduce((sum, item) => {
       const lineTotal = item.quantity * item.unitPrice;
-      return sum + (lineTotal * item.vatRate / 100);
+      return sum + (lineTotal * item.vatRate) / 100;
     }, 0);
     const totalTTC = totalHT + totalTVA;
-    
     return { totalHT, totalTVA, totalTTC };
   };
 
-  // Gestion du passage à l'étape suivante
   const nextStep = () => {
-    setCurrentStep(prev => prev + 1);
+    setCurrentStep((prev) => prev + 1);
   };
 
-  // Gestion du retour à l'étape précédente
   const prevStep = () => {
-    setCurrentStep(prev => prev - 1);
+    setCurrentStep((prev) => prev - 1);
   };
 
-  // Soumission du formulaire
-  const handleSubmit = () => {
+  const handleSaveOnly = () => {
+    console.log("Enregistrement de la facture sans téléchargement");
+    console.log("Données de la facture:", invoice);
+    try {
+      onGenerate(invoice);
+      console.log("Facture enregistrée avec succès");
+      setShowConfirmModal(false); // Ferme la modale après action
+    } catch (error) {
+      console.error("Erreur lors de l'enregistrement:", error);
+      alert("Une erreur s'est produite lors de l'enregistrement.");
+    }
+  };
+
+  const handleSubmit = (downloadPdf = false) => {
     console.log("Démarrage de la génération de facture");
     console.log("Données de la facture:", invoice);
-    
     try {
-      // Génération et téléchargement du PDF
-      console.log("Tentative de génération du PDF");
-      generateInvoicePDF(invoice, defaultCompanyInfo);
-      console.log("PDF généré avec succès");
-      
-      // Envoi des données au composant parent
+      if (downloadPdf) {
+        console.log("Tentative de génération du PDF");
+        generateInvoicePDF(invoice, defaultCompanyInfo);
+        console.log("PDF généré avec succès");
+      }
       console.log("Envoi des données au composant parent");
       onGenerate(invoice);
+      setShowConfirmModal(false); // Ferme la modale après action
     } catch (error) {
       console.error("Erreur lors de la génération du PDF:", error);
-      alert("Une erreur s'est produite lors de la génération du PDF. Vérifiez la console pour plus de détails.");
-      // Quand même envoyer les données au composant parent en cas d'erreur
+      alert("Une erreur s'est produite lors de la génération du PDF.");
       onGenerate(invoice);
     }
   };
 
-  // Formatage des montants
   const formatAmount = (amount: number) => {
-    return amount.toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+    return amount.toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €";
+  };
+
+  // Fonction pour ouvrir la modale
+  const handleGenerateClick = () => {
+    setShowConfirmModal(true);
   };
 
   return (
@@ -204,11 +190,7 @@ const InvoiceGenerator: React.FC<InvoiceGeneratorProps> = ({ onClose, onGenerate
       <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
         <div className="sticky top-0 bg-white p-6 border-b flex justify-between items-center z-10 rounded-t-2xl">
           <h2 className="text-xl font-medium text-gray-900">Nouvelle facture</h2>
-          <button 
-            onClick={onClose} 
-            className="text-gray-400 hover:text-gray-500 transition-colors"
-            aria-label="Fermer"
-          >
+          <button onClick={onClose} className="text-gray-400 hover:text-gray-500 transition-colors" aria-label="Fermer">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -220,18 +202,18 @@ const InvoiceGenerator: React.FC<InvoiceGeneratorProps> = ({ onClose, onGenerate
           <div className="mb-8">
             <div className="flex items-center justify-between">
               <div className="flex items-center">
-                <div className={`flex items-center justify-center w-8 h-8 rounded-full ${currentStep >= 1 ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-500'}`}>1</div>
-                <div className={`ml-2 text-sm font-medium ${currentStep >= 1 ? 'text-blue-500' : 'text-gray-500'}`}>Informations</div>
+                <div className={`flex items-center justify-center w-8 h-8 rounded-full ${currentStep >= 1 ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-500"}`}>1</div>
+                <div className={`ml-2 text-sm font-medium ${currentStep >= 1 ? "text-blue-500" : "text-gray-500"}`}>Informations</div>
               </div>
-              <div className={`flex-1 h-1 mx-4 ${currentStep >= 2 ? 'bg-blue-500' : 'bg-gray-200'}`}></div>
+              <div className={`flex-1 h-1 mx-4 ${currentStep >= 2 ? "bg-blue-500" : "bg-gray-200"}`}></div>
               <div className="flex items-center">
-                <div className={`flex items-center justify-center w-8 h-8 rounded-full ${currentStep >= 2 ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-500'}`}>2</div>
-                <div className={`ml-2 text-sm font-medium ${currentStep >= 2 ? 'text-blue-500' : 'text-gray-500'}`}>Articles</div>
+                <div className={`flex items-center justify-center w-8 h-8 rounded-full ${currentStep >= 2 ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-500"}`}>2</div>
+                <div className={`ml-2 text-sm font-medium ${currentStep >= 2 ? "text-blue-500" : "text-gray-500"}`}>Articles</div>
               </div>
-              <div className={`flex-1 h-1 mx-4 ${currentStep >= 3 ? 'bg-blue-500' : 'bg-gray-200'}`}></div>
+              <div className={`flex-1 h-1 mx-4 ${currentStep >= 3 ? "bg-blue-500" : "bg-gray-200"}`}></div>
               <div className="flex items-center">
-                <div className={`flex items-center justify-center w-8 h-8 rounded-full ${currentStep >= 3 ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-500'}`}>3</div>
-                <div className={`ml-2 text-sm font-medium ${currentStep >= 3 ? 'text-blue-500' : 'text-gray-500'}`}>Récapitulatif</div>
+                <div className={`flex items-center justify-center w-8 h-8 rounded-full ${currentStep >= 3 ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-500"}`}>3</div>
+                <div className={`ml-2 text-sm font-medium ${currentStep >= 3 ? "text-blue-500" : "text-gray-500"}`}>Récapitulatif</div>
               </div>
             </div>
           </div>
@@ -262,7 +244,7 @@ const InvoiceGenerator: React.FC<InvoiceGeneratorProps> = ({ onClose, onGenerate
                     className="block w-full rounded-lg border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm p-2 border"
                   >
                     <option value="">Sélectionner un client ou créer un nouveau</option>
-                    {clients.map(client => (
+                    {clients.map((client) => (
                       <option key={client.id} value={client.id}>{client.name}</option>
                     ))}
                   </select>
@@ -415,13 +397,9 @@ const InvoiceGenerator: React.FC<InvoiceGeneratorProps> = ({ onClose, onGenerate
                   </select>
                 </div>
               </div>
-              
+
               <div className="flex justify-end mt-6">
-                <button
-                  type="button"
-                  onClick={nextStep}
-                  className="bg-blue-500 text-white px-5 py-2.5 rounded-lg hover:bg-blue-600 transition-colors"
-                >
+                <button type="button" onClick={nextStep} className="bg-blue-500 text-white px-5 py-2.5 rounded-lg hover:bg-blue-600 transition-colors">
                   Suivant
                 </button>
               </div>
@@ -450,7 +428,7 @@ const InvoiceGenerator: React.FC<InvoiceGeneratorProps> = ({ onClose, onGenerate
                           <input
                             type="text"
                             value={item.description}
-                            onChange={(e) => updateItem(index, 'description', e.target.value)}
+                            onChange={(e) => updateItem(index, "description", e.target.value)}
                             className="block w-full rounded-lg border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm p-2 border"
                             placeholder="Description de l'article ou service"
                             required
@@ -460,7 +438,7 @@ const InvoiceGenerator: React.FC<InvoiceGeneratorProps> = ({ onClose, onGenerate
                           <input
                             type="number"
                             value={item.quantity}
-                            onChange={(e) => updateItem(index, 'quantity', e.target.value)}
+                            onChange={(e) => updateItem(index, "quantity", e.target.value)}
                             className="block w-full rounded-lg border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm p-2 border"
                             min="1"
                             step="1"
@@ -472,7 +450,7 @@ const InvoiceGenerator: React.FC<InvoiceGeneratorProps> = ({ onClose, onGenerate
                             <input
                               type="number"
                               value={item.unitPrice}
-                              onChange={(e) => updateItem(index, 'unitPrice', e.target.value)}
+                              onChange={(e) => updateItem(index, "unitPrice", e.target.value)}
                               className="block w-full rounded-lg border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm p-2 pl-2 pr-8 border"
                               min="0"
                               step="0.01"
@@ -488,7 +466,7 @@ const InvoiceGenerator: React.FC<InvoiceGeneratorProps> = ({ onClose, onGenerate
                             <input
                               type="number"
                               value={item.vatRate}
-                              onChange={(e) => updateItem(index, 'vatRate', e.target.value)}
+                              onChange={(e) => updateItem(index, "vatRate", e.target.value)}
                               className="block w-full rounded-lg border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm p-2 pl-2 pr-8 border"
                               min="0"
                               max="100"
@@ -501,9 +479,7 @@ const InvoiceGenerator: React.FC<InvoiceGeneratorProps> = ({ onClose, onGenerate
                           </div>
                         </td>
                         <td className="px-3 py-2">
-                          <div className="text-sm font-medium text-gray-900">
-                            {formatAmount(item.quantity * item.unitPrice)}
-                          </div>
+                          <div className="text-sm font-medium text-gray-900">{formatAmount(item.quantity * item.unitPrice)}</div>
                         </td>
                         <td className="px-3 py-2 text-right">
                           <button
@@ -566,7 +542,7 @@ const InvoiceGenerator: React.FC<InvoiceGeneratorProps> = ({ onClose, onGenerate
                   </div>
                 </div>
               </div>
-              
+
               <div className="flex justify-between mt-6">
                 <button
                   type="button"
@@ -622,9 +598,7 @@ const InvoiceGenerator: React.FC<InvoiceGeneratorProps> = ({ onClose, onGenerate
                       <div className="text-sm font-medium">{invoice.client.name}</div>
                       <div className="text-sm text-gray-600">{invoice.client.email}</div>
                       <div className="text-sm text-gray-600">{invoice.client.address}</div>
-                      <div className="text-sm text-gray-600">
-                        {invoice.client.zipCode} {invoice.client.city}
-                      </div>
+                      <div className="text-sm text-gray-600">{invoice.client.zipCode} {invoice.client.city}</div>
                       <div className="text-sm text-gray-600">{invoice.client.country}</div>
                       {invoice.client.vatNumber && (
                         <div className="flex justify-between">
@@ -699,13 +673,55 @@ const InvoiceGenerator: React.FC<InvoiceGeneratorProps> = ({ onClose, onGenerate
                 >
                   Précédent
                 </button>
-                <button
-                  type="button"
-                  onClick={handleSubmit}
-                  className="bg-blue-500 text-white px-5 py-2.5 rounded-lg hover:bg-blue-600 transition-colors"
-                >
-                  Générer la facture
-                </button>
+                <div className="flex space-x-3">
+                  <button
+                    type="button"
+                    onClick={handleSaveOnly}
+                    className="px-5 py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+                  >
+                    Enregistrer uniquement
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleGenerateClick} // Ouvre la modale au lieu de lancer directement handleSubmit
+                    className="bg-blue-500 text-white px-5 py-2.5 rounded-lg hover:bg-blue-600 transition-colors"
+                  >
+                    Générer et télécharger PDF
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Modale de confirmation */}
+          {showConfirmModal && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+              <div className="bg-white rounded-lg p-6 max-w-md w-full">
+                <h3 className="text-lg font-medium text-gray-900 mb-4">Confirmation</h3>
+                <p className="text-sm text-gray-600 mb-6">Que voulez-vous faire avec cette facture ?</p>
+                <div className="flex justify-end space-x-3">
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmModal(false)}
+                    className="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+                  >
+                    Annuler
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleSaveOnly}
+                    className="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+                  >
+                    Enregistrer uniquement
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleSubmit(true)}
+                    className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+                  >
+                    Enregistrer et télécharger
+                  </button>
+                </div>
               </div>
             </div>
           )}
