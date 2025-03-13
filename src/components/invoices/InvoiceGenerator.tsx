@@ -186,7 +186,7 @@ const InvoiceGenerator: React.FC<InvoiceGeneratorProps> = ({ onClose, onGenerate
   };
 
   return (
-    <div className="fixed inset-0 bg-gray-50 flex justify-center items-center z-50 p-4 overflow-y-auto">
+    <div className="fixed top-0 bottom-0 right-0 left-64 bg-gray-50 flex justify-center items-center z-50 p-4 overflow-y-auto">
       <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
         <div className="sticky top-0 bg-white p-6 border-b flex justify-between items-center z-10 rounded-t-2xl">
           <h2 className="text-xl font-medium text-gray-900">Nouvelle facture</h2>
