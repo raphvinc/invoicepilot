@@ -62,7 +62,7 @@ const ReminderTemplateForm: React.FC<ReminderTemplateFormProps> = ({
   };
   
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+    <div className="fixed top-0 bottom-0 right-0 left-64 bg-gray-50 flex justify-center items-center z-50 p-4 overflow-y-auto">
       <div className="bg-white rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-medium text-gray-900">

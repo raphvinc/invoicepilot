@@ -1,6 +1,4 @@
 {
-  "name": "invoicepilot-temp",
-  "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -12,24 +10,24 @@
     "@types/recharts": "^1.8.29",
     "jspdf": "^3.0.0",
     "jspdf-autotable": "^5.0.2",
-    "next": "15.2.2",
-    "papaparse": "^5.5.2",
-    "pdfjs-dist": "^4.10.38",
+    "next": "^15.2.2",
+    "papaparse": "^5.2.2",
+    "pdfjs-dist": "^4.0.379",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-dropzone": "^14.3.8",
     "recharts": "^2.15.1",
-    "tesseract.js": "^6.0.0"
+    "tesseract.js": "^5.0.0"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3",
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "15.2.2",
-    "tailwindcss": "^4",
-    "typescript": "^5"
+    "@tailwindcss/postcss": "^3.3",
+    "@types/node": "^20.3",
+    "@types/papaparse": "^5.3.5", 
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "eslint": "^9.9",
+    "eslint-config-next": "^15.2.2",
+    "tailwindcss": "^3.4",
+    "typescript": "^5.5"
   }
 }
